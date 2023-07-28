@@ -34,8 +34,8 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-      - name: installing git
+      - name: updating the pkg
         run: 
-          apt-get install git
+          apt-get install upadate
      
 
