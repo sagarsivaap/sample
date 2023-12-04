@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code repository
+                git 'https://github.com/your/repository.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Build your artifacts (e.g., Docker images, JAR files, etc.)
+                sh 'mvn clean package' // Example for Maven-based projects
+            }
+        }
+
+        stage('Deploy to Kubernetes Dev Namespace') {
+            environment {
+                KUBECONFIG = credentials('kubeconfig_credentials_id') // Use the ID of your Kubernetes configuration credentials
+            }
+            steps {
+                // Apply Kubernetes manifests (e.g., YAML files) to deploy your artifacts into a specific namespace
+                sh 'kubectl apply -f path/to/kubernetes-manifests -n dev' // Replace 'dev' with your development namespace
+            }
+        }
+    }
+}
